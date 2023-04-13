@@ -21,7 +21,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp
                     case "1": Tela.telaCadastroAmigos.EscolherOpcaoMenu(); break;
                     case "2": Tela.telaCadastroRevistas.EscolherOpcaoMenu(); break;
                     case "3": Tela.telaCadastroCaixa.EscolherOpcaoMenu(); break;
-                    case "4": break;
+                    case "4": Tela.telaCadastroEmprestimos.EscolherOpcaoMenu(); break;
                     case "S": continuar = false; break;
                     default: break;
                 }

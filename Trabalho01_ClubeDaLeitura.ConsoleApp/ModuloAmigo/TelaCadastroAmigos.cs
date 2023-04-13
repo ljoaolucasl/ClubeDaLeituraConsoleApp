@@ -44,7 +44,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
 
             if (ValidaListaVazia(repositorioAmigos.listaDados))
             {
-                Amigos idCadastroAmigoSelecionado = ValidaIdRevistas("editar");
+                Amigos idCadastroAmigoSelecionado = ValidaIdAmigos("editar");
 
                 Amigos infoAmigoAtualizado = ObterCadastroAmigo();
 
@@ -64,7 +64,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
 
             if (ValidaListaVazia(repositorioAmigos.listaDados))
             {
-                Amigos idCadastroAmigoSelecionado = ValidaIdRevistas("excluir");
+                Amigos idCadastroAmigoSelecionado = ValidaIdAmigos("excluir");
 
                 repositorioAmigos.Excluir(idCadastroAmigoSelecionado);
 
@@ -153,7 +153,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
             return endereco;
         }
 
-        private Amigos ValidaIdRevistas(string tipo)
+        public Amigos ValidaIdAmigos(string tipo)
         {
             Amigos amigo;
 

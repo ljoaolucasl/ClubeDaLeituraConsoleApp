@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloCaixa;
+using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista;
 
 namespace Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado
@@ -16,9 +17,11 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado
         public static TelaCadastroAmigos telaCadastroAmigos = new();
         public static TelaCadastroCaixa telaCadastroCaixa = new();
         public static TelaCadastroRevistas telaCadastroRevistas = new();
+        public static TelaCadastroEmprestimos telaCadastroEmprestimos = new();
         public static RepositorioAmigos repositorioAmigos = new();
         public static RepositorioCaixas repositorioCaixas = new();
         public static RepositorioRevistas repositorioRevistas = new();
+        public static RepositorioEmprestimos repositorioEmprestimos = new();
 
         public void MostrarMenu(string tipo)
         {

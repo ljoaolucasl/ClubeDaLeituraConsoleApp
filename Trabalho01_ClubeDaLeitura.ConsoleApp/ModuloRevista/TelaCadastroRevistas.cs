@@ -154,7 +154,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
             return caixa;
         }
 
-        private Revistas ValidaIdRevistas(string tipo)
+        public Revistas ValidaIdRevistas(string tipo)
         {
             Revistas caixa;
 
