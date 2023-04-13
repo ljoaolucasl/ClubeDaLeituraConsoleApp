@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado.Repositorio">
+    <Position X="5.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Compartilhado\Repositorio.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo.RepositorioAmigos">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAABAIAQAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>ModuloAmigo\RepositorioAmigos.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloCaixa.RepositorioCaixas">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAABAIAQAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>ModuloCaixa\RepositorioCaixas.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista.RepositorioRevistas">
+    <Position X="9.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAABAIAQAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>ModuloRevista\RepositorioRevistas.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

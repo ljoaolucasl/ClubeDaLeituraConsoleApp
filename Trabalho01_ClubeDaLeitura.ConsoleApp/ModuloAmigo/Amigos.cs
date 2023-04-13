@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado;
 
 namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
 {
-    public class Amigos
+    public class Amigos : Entidade
     {
-        public int id;
         public string nome;
         public string nomeResponsavel;
         public int telefone;

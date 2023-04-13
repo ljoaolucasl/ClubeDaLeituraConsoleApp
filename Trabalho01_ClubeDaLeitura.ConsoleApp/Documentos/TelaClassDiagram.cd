@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado.Tela">
+    <Position X="6.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAkAAAAAAAAAAAAAAAAAAAAECAZSAAgAAAAQAFQAAA=</HashCode>
+      <FileName>Compartilhado\Tela.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo.TelaCadastroAmigos">
+    <Position X="2" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABIAAAAAEBAAFUAAAAAAAAAAAAAABAAEAYAAAAAAAAA=</HashCode>
+      <FileName>ModuloAmigo\TelaCadastroAmigos.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloCaixa.TelaCadastroCaixa">
+    <Position X="13" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQkAAAgAAAAAAAAAgAAAAAIAAEAAQAAQAAACA=</HashCode>
+      <FileName>ModuloCaixa\TelaCadastroCaixa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista.TelaCadastroRevistas">
+    <Position X="10.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAABCEIEAAAAAAAAAAAICAAAAAIAgAEAAAAAAAACAA=</HashCode>
+      <FileName>ModuloRevista\TelaCadastroRevistas.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

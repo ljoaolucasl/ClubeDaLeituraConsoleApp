@@ -4,42 +4,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista;
 
 namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
 {
-    public class TelaCadastroAmigos
+    public class TelaCadastroAmigos : Tela
     {
-        public static void Menu()
+        public void EscolherOpcaoMenu()
         {
             bool continuar = true;
 
             while (continuar)
             {
-                Console.Clear();
-
-                Console.WriteLine("Controle de Amigos");
-                PulaLinha();
-                Console.WriteLine("(1)Visualizar Amigos");
-                Console.WriteLine("(2)Adicionar Amigo");
-                Console.WriteLine("(3)Editar Amigo");
-                Console.WriteLine("(4)Excluir Amigo");
-                PulaLinha();
-                Console.WriteLine("(S)Sair");
-                PulaLinha();
-                Console.Write("Escolha: ");
+                MostrarMenu("Amigo");
 
                 continuar = InicializarOpcaoEscolhida();
             }
         }
 
-        public static void AdicionarCadastroAmigo()
+        public void AdicionarCadastroAmigo()
         {
             VisualizarAmigos();
 
             Amigos infoAmigo = ObterCadastroAmigo();
 
-            RepositorioAmigos.Adicionar(infoAmigo);
+            repositorioAmigos.Adicionar(infoAmigo);
 
             VisualizarAmigos();
 
@@ -48,71 +38,66 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
             Console.ReadLine();
         }
 
-        public static void EditarCadastroAmigo()
+        public void EditarCadastroAmigo()
         {
             VisualizarAmigos();
 
-            Amigos idCadastroAmigoSelecionado = ValidaIdRevistas("editar");
+            if (ValidaListaVazia(repositorioAmigos.listaDados))
+            {
+                Amigos idCadastroAmigoSelecionado = ValidaIdRevistas("editar");
 
-            Amigos infoAmigoAtualizado = ObterCadastroAmigo();
+                Amigos infoAmigoAtualizado = ObterCadastroAmigo();
 
-            RepositorioAmigos.Editar(idCadastroAmigoSelecionado, infoAmigoAtualizado);
+                repositorioAmigos.Editar(idCadastroAmigoSelecionado, infoAmigoAtualizado);
 
-            VisualizarAmigos();
+                VisualizarAmigos();
 
-            MensagemColor("\nAmigo editado com sucesso!", ConsoleColor.Green);
+                MensagemColor("\nAmigo editado com sucesso!", ConsoleColor.Green);
+            }
 
             Console.ReadLine();
         }
 
-        public static void ExcluirCadastroAmigo()
+        public void ExcluirCadastroAmigo()
         {
             VisualizarAmigos();
 
-            Amigos idCadastroAmigoSelecionado = ValidaIdRevistas("excluir");
+            if (ValidaListaVazia(repositorioAmigos.listaDados))
+            {
+                Amigos idCadastroAmigoSelecionado = ValidaIdRevistas("excluir");
 
-            RepositorioAmigos.Excluir(idCadastroAmigoSelecionado);
+                repositorioAmigos.Excluir(idCadastroAmigoSelecionado);
 
-            VisualizarAmigos();
+                VisualizarAmigos();
 
-            MensagemColor("\nAmigo excluído com sucesso!", ConsoleColor.Green);
+                MensagemColor("\nAmigo excluído com sucesso!", ConsoleColor.Green);
+            }
 
             Console.ReadLine();
         }
 
-        public static void VisualizarAmigos()
+        public void VisualizarAmigos()
         {
             Console.Clear();
 
-            int i = 0;
-
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("{0, -10} │ {1, -25} │ {2, -25} │ {3, -20} │ {4, -30}", "ID", "Nome", "Nome do Responsável", "Telefone", "Endereço");
-            Console.WriteLine("".PadRight(110, '―'));
+            Console.WriteLine("".PadRight(122, '―'));
             Console.ResetColor();
 
-            foreach (Amigos info in RepositorioAmigos.GetListaAmigos())
+            foreach (Amigos info in repositorioAmigos.GetListaDados())
             {
-                if (i % 2 == 0)
-                {
-                    Console.BackgroundColor = ConsoleColor.DarkGray;
-                    Console.ForegroundColor = ConsoleColor.Black;
-                }
-                else
-                    Console.ResetColor();
+                TextoZebrado();
 
                 Console.WriteLine("{0, -10} │ {1, -25} │ {2, -25} │ {3, -20} │ {4, -30}", info.id, info.nome, info.nomeResponsavel, info.telefone, info.endereco);
-
-                i++;
             }
+
             Console.ResetColor();
 
             PulaLinha();
         }
 
-        #region private
-
-        private static bool InicializarOpcaoEscolhida()
+        private bool InicializarOpcaoEscolhida()
         {
             string entrada = Console.ReadLine();
 
@@ -128,7 +113,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
             return true;
         }
 
-        private static Amigos ObterCadastroAmigo()
+        private Amigos ObterCadastroAmigo()
         {
             Amigos infoAmigo = new()
             {
@@ -139,13 +124,6 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
             };
 
             return infoAmigo;
-        }
-
-        private static int ObterIdEscolhido(string acao)
-        {
-            int idEscolhido = ValidaNumero($"Digite o ID da linha que deseja {acao}: ");
-
-            return idEscolhido;
         }
 
         private static string ObterNome()
@@ -162,7 +140,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
             return nomeResponsavel;
         }
 
-        private static int ObterTelefone()
+        private int ObterTelefone()
         {
             int telefone = ValidaNumero("Escreva o Telefone: ");
             return telefone;
@@ -175,28 +153,13 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
             return endereco;
         }
 
-        private static void MensagemColor(string mensagem, ConsoleColor cor)
-        {
-            Console.ForegroundColor = cor;
-            Console.Write(mensagem);
-            Console.ResetColor();
-        }
-
-        private static void PulaLinha()
-        {
-            Console.WriteLine();
-        }
-        #endregion
-
-        #region validacoes
-
-        private static Amigos ValidaIdRevistas(string tipo)
+        private Amigos ValidaIdRevistas(string tipo)
         {
             Amigos amigo;
 
             do
             {
-                amigo = RepositorioAmigos.SelecionarId(ObterIdEscolhido(tipo));
+                amigo = repositorioAmigos.SelecionarId(ObterIdEscolhido(tipo));
 
                 if (amigo == null)
                 {
@@ -207,31 +170,5 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
 
             return amigo;
         }
-
-        private static int ValidaNumero(string mensagem)
-        {
-            bool validaNumero;
-            string entrada;
-            int numero;
-
-            do
-            {
-                Console.Write(mensagem);
-
-                entrada = Console.ReadLine();
-
-                validaNumero = int.TryParse(entrada, out numero);
-
-                if (!validaNumero)
-                {
-                    MensagemColor("Atenção, apenas números\n", ConsoleColor.Red);
-                }
-
-            } while (!validaNumero);
-
-            return numero;
-        }
-
-        #endregion
     }
 }

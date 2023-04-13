@@ -4,34 +4,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado;
 
 namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
 {
-    public class RepositorioAmigos
+    public class RepositorioAmigos : Repositorio
     {
-        private static ArrayList listaAmigos = new();
-
-        private static int id = 1;
-
-        public static ArrayList GetListaAmigos()
-        {
-            return listaAmigos;
-        }
-
-        public static void Adicionar(Amigos infoAmigo)
+        public void Adicionar(Amigos infoAmigo)
         {
             Amigos cadastroAmigo = new();
 
-            IncrementarEDefinirID(cadastroAmigo);
+            DefinirId(cadastroAmigo);
+            IncrementarId();
             cadastroAmigo.nome = infoAmigo.nome;
             cadastroAmigo.nomeResponsavel = infoAmigo.nomeResponsavel;
             cadastroAmigo.telefone = infoAmigo.telefone;
             cadastroAmigo.endereco = infoAmigo.endereco;
 
-            listaAmigos.Add(cadastroAmigo);
+            listaDados.Add(cadastroAmigo);
         }
 
-        public static void Editar(Amigos idCadastroAmigoSelecionado, Amigos infoAmigoAtualizado)
+        public void Editar(Amigos idCadastroAmigoSelecionado, Amigos infoAmigoAtualizado)
         {
             idCadastroAmigoSelecionado.nome = infoAmigoAtualizado.nome;
             idCadastroAmigoSelecionado.nomeResponsavel = infoAmigoAtualizado.nomeResponsavel;
@@ -39,18 +32,18 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
             idCadastroAmigoSelecionado.endereco = infoAmigoAtualizado.endereco;
         }
 
-        public static void Excluir(Amigos idCadastroAmigoSelecionado)
+        public void Excluir(Amigos idCadastroAmigoSelecionado)
         {
-            int idEscolhidoIndex = listaAmigos.IndexOf(idCadastroAmigoSelecionado);
+            int idEscolhidoIndex = listaDados.IndexOf(idCadastroAmigoSelecionado);
 
-            listaAmigos.RemoveAt(idEscolhidoIndex);
+            listaDados.RemoveAt(idEscolhidoIndex);
         }
 
-        public static Amigos SelecionarId(int idEscolhido)
+        public Amigos SelecionarId(int idEscolhido)
         {
             while (true)
             {
-                foreach (Amigos amigo in listaAmigos)
+                foreach (Amigos amigo in listaDados)
                 {
                     if (amigo.id == idEscolhido)
                     {
@@ -61,14 +54,9 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
             }
         }
 
-        #region private
-
-        private static void IncrementarEDefinirID(Amigos cadastroAmigo)
+        private void DefinirId(Amigos cadastroAmigo)
         {
             cadastroAmigo.id = id;
-            id++;
         }
-
-        #endregion
     }
 }

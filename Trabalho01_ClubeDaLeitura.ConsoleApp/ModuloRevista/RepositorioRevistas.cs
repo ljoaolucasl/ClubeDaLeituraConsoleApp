@@ -4,35 +4,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista;
 
 namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
 {
-    public class RepositorioRevistas
+    public class RepositorioRevistas : Repositorio
     {
-        private static ArrayList listaRevistas = new();
-
-        private static int id = 1;
-
-        public static ArrayList GetListaRevistas()
-        {
-            return listaRevistas;
-        }
-
-        public static void Adicionar(Revistas infoRevista)
+        public void Adicionar(Revistas infoRevista)
         {
             Revistas cadastroRevista = new();
 
-            IncrementarEDefinirID(cadastroRevista);
+            DefinirId(cadastroRevista);
+            IncrementarId();
             cadastroRevista.colecao = infoRevista.colecao;
             cadastroRevista.edicao = infoRevista.edicao;
             cadastroRevista.ano = infoRevista.ano;
             cadastroRevista.caixa = infoRevista.caixa;
 
-            listaRevistas.Add(cadastroRevista);
+            listaDados.Add(cadastroRevista);
         }
 
-        public static void Editar(Revistas idCadastroRevistaSelecionado, Revistas infoRevistaAtualizado)
+        public void Editar(Revistas idCadastroRevistaSelecionado, Revistas infoRevistaAtualizado)
         {
             idCadastroRevistaSelecionado.colecao = infoRevistaAtualizado.colecao;
             idCadastroRevistaSelecionado.edicao = infoRevistaAtualizado.edicao;
@@ -40,18 +33,18 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
             idCadastroRevistaSelecionado.caixa = infoRevistaAtualizado.caixa;
         }
 
-        public static void Excluir(Revistas idCadastroRevistaSelecionado)
+        public void Excluir(Revistas idCadastroRevistaSelecionado)
         {
-            int idEscolhidoIndex = listaRevistas.IndexOf(idCadastroRevistaSelecionado);
+            int idEscolhidoIndex = listaDados.IndexOf(idCadastroRevistaSelecionado);
 
-            listaRevistas.RemoveAt(idEscolhidoIndex);
+            listaDados.RemoveAt(idEscolhidoIndex);
         }
 
-        public static Revistas SelecionarId(int idEscolhido)
+        public Revistas SelecionarId(int idEscolhido)
         {
             while (true)
             {
-                foreach (Revistas Revista in listaRevistas)
+                foreach (Revistas Revista in listaDados)
                 {
                     if (Revista.id == idEscolhido)
                     {
@@ -62,14 +55,9 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
             }
         }
 
-        #region private
-
-        private static void IncrementarEDefinirID(Revistas cadastroRevista)
+        private void DefinirId(Revistas cadastroRevista)
         {
             cadastroRevista.id = id;
-            id++;
         }
-
-        #endregion
     }
 }

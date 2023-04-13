@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado;
 
 namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloCaixa
 {
-    public class Caixas
+    public class Caixas : Entidade
     {
-        public int id;
         public string cor;
         public string etiqueta;
     }

@@ -4,52 +4,45 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloCaixa;
 
 namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloCaixa
 {
-    public class RepositorioCaixas
+    public class RepositorioCaixas : Repositorio
     {
-        private static ArrayList listaCaixa = new();
-
-        private static int id = 1;
-
-        public static ArrayList GetListaCaixas()
-        {
-            return listaCaixa;
-        }
-
-        public static void Adicionar(Caixas infoCaixa)
+        public void Adicionar(Caixas infoCaixa)
         {
             Caixas cadastroCaixa = new();
 
-            IncrementarEDefinirID(cadastroCaixa);
+            DefinirId(cadastroCaixa);
+            IncrementarId();
             cadastroCaixa.etiqueta = infoCaixa.etiqueta;
             cadastroCaixa.cor = infoCaixa.cor;
 
-            listaCaixa.Add(cadastroCaixa);
+            listaDados.Add(cadastroCaixa);
         }
 
-        public static void Editar(Caixas idCadastroCaixaSelecionado, Caixas infoCaixaAtualizado)
+        public void Editar(Caixas idCadastroCaixaSelecionado, Caixas infoCaixaAtualizado)
         {
             idCadastroCaixaSelecionado.etiqueta = infoCaixaAtualizado.etiqueta;
             idCadastroCaixaSelecionado.cor = infoCaixaAtualizado.cor;
         }
 
-        public static void Excluir(Caixas idCadastroCaixaSelecionado)
+        public void Excluir(Caixas idCadastroCaixaSelecionado)
         {
-            int idEscolhidoIndex = listaCaixa.IndexOf(idCadastroCaixaSelecionado);
+            int idEscolhidoIndex = listaDados.IndexOf(idCadastroCaixaSelecionado);
 
             idCadastroCaixaSelecionado.etiqueta += "<Removed>";
 
-            listaCaixa.RemoveAt(idEscolhidoIndex);
+            listaDados.RemoveAt(idEscolhidoIndex);
         }
 
-        public static Caixas SelecionarId(int idEscolhido)
+        public Caixas SelecionarId(int idEscolhido)
         {
             while (true)
             {
-                foreach (Caixas Caixa in listaCaixa)
+                foreach (Caixas Caixa in listaDados)
                 {
                     if (Caixa.id == idEscolhido)
                     {
@@ -60,14 +53,9 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloCaixa
             }
         }
 
-        #region private
-
-        private static void IncrementarEDefinirID(Caixas cadastroCaixa)
+        private void DefinirId(Caixas cadastroCaixa)
         {
             cadastroCaixa.id = id;
-            id++;
         }
-
-        #endregion
     }
 }

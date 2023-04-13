@@ -4,44 +4,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloCaixa;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista;
 
 namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
 {
-    public class TelaCadastroRevistas
+    public class TelaCadastroRevistas : Tela
     {
-        public static void Menu()
+        public void EscolherOpcaoMenu()
         {
             bool continuar = true;
 
             while (continuar)
             {
-                Console.Clear();
-
-                Console.WriteLine("Controle de Revistas");
-                PulaLinha();
-                Console.WriteLine("(1)Visualizar Revistas");
-                Console.WriteLine("(2)Adicionar Revista");
-                Console.WriteLine("(3)Editar Revista");
-                Console.WriteLine("(4)Excluir Revista");
-                PulaLinha();
-                Console.WriteLine("(S)Sair");
-                PulaLinha();
-                Console.Write("Escolha: ");
+                MostrarMenu("Revista");
 
                 continuar = InicializarOpcaoEscolhida();
             }
         }
 
-        public static void AdicionarCadastroRevista()
+        public void AdicionarCadastroRevista()
         {
             VisualizarRevistas();
 
             Revistas infoRevista = ObterCadastroRevista();
 
-            RepositorioRevistas.Adicionar(infoRevista);
+            repositorioRevistas.Adicionar(infoRevista);
 
             VisualizarRevistas();
 
@@ -50,70 +40,66 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
             Console.ReadLine();
         }
 
-        public static void EditarCadastroRevista()
+        public void EditarCadastroRevista()
         {
             VisualizarRevistas();
 
-            Revistas idCadastroRevistaSelecionado = ValidaIdRevistas("editar");
+            if (ValidaListaVazia(repositorioRevistas.listaDados))
+            {
+                Revistas idCadastroRevistaSelecionado = ValidaIdRevistas("editar");
 
-            Revistas infoRevistaAtualizado = ObterCadastroRevista();
+                Revistas infoRevistaAtualizado = ObterCadastroRevista();
 
-            RepositorioRevistas.Editar(idCadastroRevistaSelecionado, infoRevistaAtualizado);
+                repositorioRevistas.Editar(idCadastroRevistaSelecionado, infoRevistaAtualizado);
 
-            VisualizarRevistas();
+                VisualizarRevistas();
 
-            MensagemColor("\nRevista editada com sucesso!", ConsoleColor.Green);
+                MensagemColor("\nRevista editada com sucesso!", ConsoleColor.Green);
+            }
 
             Console.ReadLine();
         }
 
-        public static void ExcluirCadastroRevista()
+        public void ExcluirCadastroRevista()
         {
             VisualizarRevistas();
 
-            Revistas idCadastroRevistaSelecionado = ValidaIdRevistas("excluir");
+            if (ValidaListaVazia(repositorioRevistas.listaDados))
+            {
+                Revistas idCadastroRevistaSelecionado = ValidaIdRevistas("excluir");
 
-            RepositorioRevistas.Excluir(idCadastroRevistaSelecionado);
+                repositorioRevistas.Excluir(idCadastroRevistaSelecionado);
 
-            VisualizarRevistas();
+                VisualizarRevistas();
 
-            MensagemColor("\nRevista excluída com sucesso!", ConsoleColor.Green);
+                MensagemColor("\nRevista excluída com sucesso!", ConsoleColor.Green);
+            }
 
             Console.ReadLine();
         }
 
-        public static void VisualizarRevistas()
+        public void VisualizarRevistas()
         {
             Console.Clear();
 
-            int i = 0;
-
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("{0, -10} │ {1, -20} │ {2, -15} │ {3, -15} │ {4, -15}", "ID", "Tipo de Coleção", "N°Edição", "Ano", "Caixa");
-            Console.WriteLine("".PadRight(75, '―'));
+            Console.WriteLine("".PadRight(87, '―'));
             Console.ResetColor();
 
-            foreach (Revistas info in RepositorioRevistas.GetListaRevistas())
+            foreach (Revistas info in repositorioRevistas.GetListaDados())
             {
-                if (i % 2 == 0)
-                {
-                    Console.BackgroundColor = ConsoleColor.DarkGray;
-                    Console.ForegroundColor = ConsoleColor.Black;
-                }
-                else
-                    Console.ResetColor();
+                TextoZebrado();
 
                 Console.WriteLine("{0, -10} │ {1, -20} │ {2, -15} │ {3, -15} │ {4, -15}", info.id, info.colecao, info.edicao, info.ano, info.caixa.etiqueta);
-
-                i++;
             }
+
             Console.ResetColor();
 
             PulaLinha();
         }
 
-        #region private
-        private static bool InicializarOpcaoEscolhida()
+        private bool InicializarOpcaoEscolhida()
         {
             string entrada = Console.ReadLine();
 
@@ -129,7 +115,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
             return true;
         }
 
-        private static Revistas ObterCadastroRevista()
+        private Revistas ObterCadastroRevista()
         {
             Revistas infoRevista = new()
             {
@@ -142,13 +128,6 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
             return infoRevista;
         }
 
-        private static int ObterIdEscolhido(string acao)
-        {
-            int idEscolhido = ValidaNumero($"Digite o ID da linha que deseja {acao}: ");
-
-            return idEscolhido;
-        }
-
         private static string ObterColecao()
         {
             Console.Write("Escreva o Tipo de Coleção: ");
@@ -156,13 +135,13 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
             return colecao;
         }
 
-        private static int ObterEdicao()
+        private int ObterEdicao()
         {
             int edicao = ValidaNumero("Escreva o Número da Edição: ");
             return edicao;
         }
 
-        private static int ObterAno()
+        private int ObterAno()
         {
             int ano = ValidaNumero("Escreva o Ano da Revista: ");
             return ano;
@@ -170,33 +149,18 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
 
         private static Caixas ObterCaixa()
         {
-            TelaCadastroCaixa.VisualizarCaixas();
-            Caixas caixa = TelaCadastroCaixa.ValidaIdCaixas("guardar a Revista: ");
+            telaCadastroCaixa.VisualizarCaixas();
+            Caixas caixa = telaCadastroCaixa.ValidaIdCaixas("guardar a Revista: ");
             return caixa;
         }
 
-        private static void MensagemColor(string mensagem, ConsoleColor cor)
-        {
-            Console.ForegroundColor = cor;
-            Console.Write(mensagem);
-            Console.ResetColor();
-        }
-
-        private static void PulaLinha()
-        {
-            Console.WriteLine();
-        }
-        #endregion
-
-        #region validacoes
-
-        private static Revistas ValidaIdRevistas(string tipo)
+        private Revistas ValidaIdRevistas(string tipo)
         {
             Revistas caixa;
 
             do
             {
-                caixa = RepositorioRevistas.SelecionarId(ObterIdEscolhido(tipo));
+                caixa = repositorioRevistas.SelecionarId(ObterIdEscolhido(tipo));
 
                 if (caixa == null)
                 {
@@ -207,31 +171,5 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
 
             return caixa;
         }
-
-        private static int ValidaNumero(string mensagem)
-        {
-            bool validaNumero;
-            string entrada;
-            int numero;
-
-            do
-            {
-                Console.Write(mensagem);
-
-                entrada = Console.ReadLine();
-
-                validaNumero = int.TryParse(entrada, out numero);
-
-                if (!validaNumero)
-                {
-                    MensagemColor("Atenção, apenas números\n", ConsoleColor.Red);
-                }
-
-            } while (!validaNumero);
-
-            return numero;
-        }
-
-        #endregion
     }
 }

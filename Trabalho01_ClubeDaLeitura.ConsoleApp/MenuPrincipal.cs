@@ -1,11 +1,12 @@
-﻿using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo;
+﻿using Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado;
+using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloCaixa;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista;
 
 namespace Trabalho01_ClubeDaLeitura.ConsoleApp
 {
-    internal class MenuPrincipal
+    public class MenuPrincipal
     {
         static void Main(string[] args)
         {
@@ -17,9 +18,9 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp
 
                 switch (ObterEscolha().ToUpper())
                 {
-                    case "1": TelaCadastroAmigos.Menu(); break;
-                    case "2": TelaCadastroRevistas.Menu(); break;
-                    case "3": TelaCadastroCaixa.Menu(); break;
+                    case "1": Tela.telaCadastroAmigos.EscolherOpcaoMenu(); break;
+                    case "2": Tela.telaCadastroRevistas.EscolherOpcaoMenu(); break;
+                    case "3": Tela.telaCadastroCaixa.EscolherOpcaoMenu(); break;
                     case "4": break;
                     case "S": continuar = false; break;
                     default: break;
@@ -31,7 +32,9 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp
         {
             Console.Clear();
 
-            Console.WriteLine("Clube da Leitura");
+            Console.WriteLine("╔══════════════════╗");
+            Console.WriteLine("║ Clube da Leitura ║");
+            Console.WriteLine("╚══════════════════╝");
             PulaLinha();
             Console.WriteLine("(1)Controle de Amigos");
             Console.WriteLine("(2)Controle de Revistas");
