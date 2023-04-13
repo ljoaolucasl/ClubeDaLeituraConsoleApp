@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo.CadastroAmigo">
+    <Position X="1.5" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>EAICAAAAABAAARAAAAAAAAAABAAAAAAAAYgAAAAAAAA=</HashCode>
+      <FileName>ModuloAmigo\CadastroAmigo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloCaixa.CadastroCaixa">
+    <Position X="6" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>EAACAAAQAAAAABAAAAACAAAAAAAAAAAAQAABAAAAACA=</HashCode>
+      <FileName>ModuloCaixa\CadastroCaixa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo.CadastroEmprestimo">
+    <Position X="9.75" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>kBACAAAAAABAABAABAgAAAAAAAAAAAAAACABAAAAAAA=</HashCode>
+      <FileName>ModuloEmprestimo\CadastroEmprestimo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista.CadastroRevista">
+    <Position X="13.25" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>EAACAAEAAAAAABAAAAAAICAAAAAEAAAAAgAAAAAEQAA=</HashCode>
+      <FileName>ModuloRevista\CadastroRevista.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
