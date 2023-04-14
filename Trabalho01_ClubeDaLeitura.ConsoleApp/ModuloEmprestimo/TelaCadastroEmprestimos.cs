@@ -1,5 +1,6 @@
 ﻿using Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo;
+using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloCaixa;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista;
 
 namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
@@ -75,16 +76,20 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
         {
             Console.Clear();
 
+            Console.WriteLine("╔══════════════════╗");
+            Console.WriteLine("║   Empréstimos    ║");
+            Console.WriteLine("╚══════════════════╝");
+            PulaLinha();
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("{0, -10} | {1, -25} | {2, -15} | {3, -15}", "ID", "Nome", "Emprestimo", "Data Devolução");
-            Console.WriteLine("".PadRight(80, '―'));
+            Console.WriteLine("{0, -10} | {1, -25} | {2, -15} | {3, -15} | {4, -15}", "ID", "Amigo", "Revista", "Emprestimo", "Data Devolução");
+            Console.WriteLine("".PadRight(92, '―'));
             Console.ResetColor();
 
             foreach (Emprestimos info in repositorioEmprestimos.GetListaDados())
             {
                 TextoZebrado();
 
-                Console.WriteLine("{0, -10} | {1, -25} | {2, -15} | {3, -15} | {4, -15}", info.id, info.amigo, info.dataEmprestimo, info.dataDevolucao);
+                Console.WriteLine("{0, -10} | {1, -25} | {2, -15} | {3, -15} | {4, -15}", info.id, info.amigo == null ? "<Desconhecido>" : info.amigo.nome, info.revista == null ? "<Desconhecido>" : info.revista.edicao, info.dataEmprestimo.ToString("d"), info.dataDevolucao.ToString("d"));
             }
 
             Console.ResetColor();
@@ -124,26 +129,38 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
         private Amigos ObterAmigo()
         {
             telaCadastroAmigos.VisualizarAmigos();
-            Amigos amigo = telaCadastroAmigos.ValidaIdAmigos("fazer o emprestimo: ");
-            return amigo;
+
+            if (ValidaListaVazia(repositorioCaixas.listaDados))
+            {
+                Amigos amigo = telaCadastroAmigos.ValidaIdAmigos("fazer o emprestimo: ");
+                return amigo;
+            }
+            Console.ReadLine();
+            return null;
         }
 
         private Revistas ObterRevista()
         {
             telaCadastroRevistas.VisualizarRevistas();
-            Revistas revista = telaCadastroRevistas.ValidaIdRevistas("emprestar: ");
-            return revista;
+
+            if (ValidaListaVazia(repositorioCaixas.listaDados))
+            {
+                Revistas revista = telaCadastroRevistas.ValidaIdRevistas("emprestar: ");
+                return revista;
+            }
+            Console.ReadLine();
+            return null;
         }
 
         private DateTime ObterDataEmprestimo()
         {
-            DateTime dataEmprestimo = ValidaData("Escreva a Data do Emprestimo: ");
+            DateTime dataEmprestimo = ValidaData("Escreva a Data do Empréstimo: ");
             return dataEmprestimo;
         }
 
         private DateTime ObterDataDevolucao()
         {
-            DateTime dataDevolucao = ValidaData("Escreva a Data do Emprestimo: ");
+            DateTime dataDevolucao = ValidaData("Escreva a Data da Devolução: ");
             return dataDevolucao;
         }
 
@@ -188,67 +205,5 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
 
             return dataAbertura;
         }
-
-        //public static ArrayList listaEmprestimo = new();
-
-        //private Emprestimos infoEmprestimo = new();
-
-        //public static int Id { get; private set; } = 1;
-
-        //public void EfetuarCadastroAmigo()
-        //{
-        //    ObterAmigo();
-        //    ObterEmprestimo();
-        //    ObterDataEmprestimo();
-        //    ObterDataDevolucao();
-        //    ObterId();
-
-        //    listaEmprestimo.Add(infoEmprestimo);
-        //}
-
-        //public void VisualizarEmprestimo()
-        //{
-        //    Console.Clear();
-
-        //    Console.ForegroundColor = ConsoleColor.Blue;
-        //    Console.WriteLine("{0, -10} | {1, -25} | {2, -15} | {3, -15} | {4, -15}", "ID", "Nome", "Emprestimo", "Data Emprestimo", "Data Devolução");
-        //    Console.WriteLine("".PadRight(80, '―'));
-        //    Console.ResetColor();
-
-        //    foreach (Emprestimos info in listaEmprestimo)
-        //    {
-        //        Console.WriteLine("{0, -10} | {1, -25} | {2, -15} | {3, -15} | {4, -15}", info.id, info.amigo, info.Emprestimo, info.dataEmprestimo, info.dataDevolucao);
-        //    }
-        //}
-
-        //private void ObterId()
-        //{
-        //    infoEmprestimo.id = Id;
-        //    Id++;
-        //}
-
-        //private void ObterAmigo()
-        //{
-        //    Console.Write("Escreva o ID do Amigo: ");
-        //    //infoEmprestimo.amigo = Console.ReadLine();
-        //}
-
-        //private void ObterEmprestimo()
-        //{
-        //    Console.Write("Escreva o ID da Emprestimo");
-        //    //infoEmprestimo.Emprestimo = Console.ReadLine();
-        //}
-
-        //private void ObterDataEmprestimo()
-        //{
-        //    Console.Write("Escreva a Data do Emprestimo: ");
-        //    infoEmprestimo.dataEmprestimo = DateTime.Parse(Console.ReadLine());
-        //}
-
-        //private void ObterDataDevolucao()
-        //{
-        //    Console.Write("Escreva a Data da Devolução: ");
-        //    infoEmprestimo.dataDevolucao = DateTime.Parse(Console.ReadLine());
-        //}
     }
 }

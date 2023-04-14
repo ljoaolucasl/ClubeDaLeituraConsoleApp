@@ -80,6 +80,10 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
         {
             Console.Clear();
 
+            Console.WriteLine("╔══════════════════╗");
+            Console.WriteLine("║      Amigos      ║");
+            Console.WriteLine("╚══════════════════╝");
+            PulaLinha();
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("{0, -10} │ {1, -25} │ {2, -25} │ {3, -20} │ {4, -30}", "ID", "Nome", "Nome do Responsável", "Telefone", "Endereço");
             Console.WriteLine("".PadRight(122, '―'));

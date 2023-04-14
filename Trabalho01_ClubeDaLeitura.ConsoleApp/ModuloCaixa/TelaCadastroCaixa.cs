@@ -81,6 +81,10 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloCaixa
         {
             Console.Clear();
 
+            Console.WriteLine("╔══════════════════╗");
+            Console.WriteLine("║      Caixas      ║");
+            Console.WriteLine("╚══════════════════╝");
+            PulaLinha();
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("{0, -10} │ {1, -20} │ {2, -30}", "ID", "Cor", "Etiqueta");
             Console.WriteLine("".PadRight(66, '―'));

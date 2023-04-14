@@ -82,6 +82,10 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
         {
             Console.Clear();
 
+            Console.WriteLine("╔══════════════════╗");
+            Console.WriteLine("║     Revistas     ║");
+            Console.WriteLine("╚══════════════════╝");
+            PulaLinha();
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("{0, -10} │ {1, -20} │ {2, -15} │ {3, -15} │ {4, -15}", "ID", "Tipo de Coleção", "N°Edição", "Ano", "Caixa");
             Console.WriteLine("".PadRight(87, '―'));
@@ -91,7 +95,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
             {
                 TextoZebrado();
 
-                Console.WriteLine("{0, -10} │ {1, -20} │ {2, -15} │ {3, -15} │ {4, -15}", info.id, info.colecao, info.edicao, info.ano, info.caixa.etiqueta);
+                Console.WriteLine("{0, -10} │ {1, -20} │ {2, -15} │ {3, -15} │ {4, -15}", info.id, info.colecao, info.edicao, info.ano, info.caixa == null ? "<Sem Caixa>" : info.caixa.etiqueta);
             }
 
             Console.ResetColor();
@@ -147,11 +151,16 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
             return ano;
         }
 
-        private static Caixas ObterCaixa()
+        private Caixas ObterCaixa()
         {
             telaCadastroCaixa.VisualizarCaixas();
-            Caixas caixa = telaCadastroCaixa.ValidaIdCaixas("guardar a Revista: ");
-            return caixa;
+            if (ValidaListaVazia(repositorioCaixas.listaDados))
+            {
+                Caixas caixa = telaCadastroCaixa.ValidaIdCaixas("guardar a Revista: ");
+                return caixa;
+            }
+            Console.ReadLine();
+            return null;
         }
 
         public Revistas ValidaIdRevistas(string tipo)
