@@ -15,5 +15,6 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
         public Revistas revista;
         public DateTime dataEmprestimo;
         public DateTime dataDevolucao;
+        public string situacao;
     }
 }

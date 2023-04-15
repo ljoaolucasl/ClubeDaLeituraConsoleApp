@@ -1,4 +1,5 @@
-﻿using Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado;
+﻿using System.Data;
+using Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloCaixa;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista;
@@ -7,6 +8,12 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
 {
     public class TelaCadastroEmprestimos : Tela
     {
+        public RepositorioAmigos repositorioAmigos = null;
+        public RepositorioRevistas repositorioRevistas = null;
+        public RepositorioEmprestimos repositorioEmprestimos = null;
+        public TelaCadastroAmigos telaCadastroAmigos = null;
+        public TelaCadastroRevistas telaCadastroRevistas = null;
+
         public void EscolherOpcaoMenu()
         {
             bool continuar = true;
@@ -25,11 +32,18 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
 
             Emprestimos infoEmprestimo = ObterCadastroEmprestimo();
 
+            if(infoEmprestimo == null)
+            {
+                MensagemColor("Esse Amigo ainda não devolveu a Revista ):", ConsoleColor.Red);
+                Console.ReadLine();
+                return;
+            }
+
             repositorioEmprestimos.Adicionar(infoEmprestimo);
 
             VisualizarEmprestimos();
 
-            MensagemColor("\nEmprestimo adicionada com sucesso!", ConsoleColor.Green);
+            MensagemColor("\nEmpréstimo adicionado com sucesso!", ConsoleColor.Green);
 
             Console.ReadLine();
         }
@@ -40,7 +54,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
 
             if (ValidaListaVazia(repositorioEmprestimos.listaDados))
             {
-                Emprestimos idCadastroEmprestimoSelecionado = ValidaIdEmprestimos("editar");
+                Emprestimos idCadastroEmprestimoSelecionado = ValidaIdEmprestimos("Digite o ID do Empréstimo que deseja editar: ");
 
                 Emprestimos infoEmprestimoAtualizado = ObterCadastroEmprestimo();
 
@@ -48,7 +62,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
 
                 VisualizarEmprestimos();
 
-                MensagemColor("\nEmprestimo editada com sucesso!", ConsoleColor.Green);
+                MensagemColor("\nEmpréstimo editado com sucesso!", ConsoleColor.Green);
             }
 
             Console.ReadLine();
@@ -60,13 +74,31 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
 
             if (ValidaListaVazia(repositorioEmprestimos.listaDados))
             {
-                Emprestimos idCadastroEmprestimoSelecionado = ValidaIdEmprestimos("excluir");
+                Emprestimos idCadastroEmprestimoSelecionado = ValidaIdEmprestimos("Digite o ID do Empréstimo que deseja excluir: ");
 
                 repositorioEmprestimos.Excluir(idCadastroEmprestimoSelecionado);
 
                 VisualizarEmprestimos();
 
-                MensagemColor("\nEmprestimo excluída com sucesso!", ConsoleColor.Green);
+                MensagemColor("\nEmprestimo excluído com sucesso!", ConsoleColor.Green);
+            }
+
+            Console.ReadLine();
+        }
+
+        public void ConfirmarDevolucoes()
+        {
+            VisualizarEmprestimos();
+
+            if (ValidaListaVazia(repositorioEmprestimos.listaDados))
+            {
+                Emprestimos idCadastroEmprestimoSelecionado = ValidaIdEmprestimos("Digite o ID para confirmar a Devolução da Revista: ");
+
+                repositorioEmprestimos.Devolver(idCadastroEmprestimoSelecionado);
+
+                VisualizarEmprestimos();
+
+                MensagemColor($"\nA Revista foi devolvida!", ConsoleColor.Green);
             }
 
             Console.ReadLine();
@@ -76,23 +108,34 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
         {
             Console.Clear();
 
-            Console.WriteLine("╔══════════════════╗");
-            Console.WriteLine("║   Empréstimos    ║");
-            Console.WriteLine("╚══════════════════╝");
+            Console.WriteLine("╔" + "".PadRight(127, '═') + "╗");
+            Console.WriteLine("║                                                         Emprétimos                                                            ║");
+            Console.WriteLine("╚" + "".PadRight(127, '═') + "╝");
             PulaLinha();
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("{0, -10} | {1, -25} | {2, -15} | {3, -15} | {4, -15}", "ID", "Amigo", "Revista", "Emprestimo", "Data Devolução");
-            Console.WriteLine("".PadRight(92, '―'));
+            string espacamento = "{0, -5} │ {1, -30} │ {2, -30} │ {3, -17} │ {4, -17} │ {5, -15}";
+            Console.WriteLine(espacamento, "ID", "Amigo", "Revista", "Data Empréstimo", "Data Devolução", "Situação");
+            Console.WriteLine("".PadRight(129, '―'));
             Console.ResetColor();
 
             foreach (Emprestimos info in repositorioEmprestimos.GetListaDados())
             {
                 TextoZebrado();
 
-                Console.WriteLine("{0, -10} | {1, -25} | {2, -15} | {3, -15} | {4, -15}", info.id, info.amigo == null ? "<Desconhecido>" : info.amigo.nome, info.revista == null ? "<Desconhecido>" : info.revista.edicao, info.dataEmprestimo.ToString("d"), info.dataDevolucao.ToString("d"));
+                if (info.situacao == "DEVOLVIDO") { }
+
+                else if (DateTime.Now < info.dataDevolucao)
+                    info.situacao = "ABERTO";
+                else
+                    info.situacao = "ATRASADO";
+
+                Console.WriteLine(espacamento, info.id, info.amigo == null ? "<Desconhecido>" : info.amigo.nome,
+                    info.revista == null ? "<Desconhecido>" : info.revista.titulo, info.dataEmprestimo.ToString("d"),
+                    info.dataDevolucao.ToString("d"), info.situacao);
             }
 
             Console.ResetColor();
+            zebra = true;
 
             PulaLinha();
         }
@@ -107,6 +150,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
                 case "2": AdicionarCadastroEmprestimo(); break;
                 case "3": EditarCadastroEmprestimo(); break;
                 case "4": ExcluirCadastroEmprestimo(); break;
+                case "5": ConfirmarDevolucoes(); break;
                 case "S": return false; break;
                 default: break;
             }
@@ -115,13 +159,15 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
 
         private Emprestimos ObterCadastroEmprestimo()
         {
-            Emprestimos infoEmprestimo = new()
-            {
-                amigo = ObterAmigo(),
-                revista = ObterRevista(),
-                dataEmprestimo = ObterDataEmprestimo(),
-                dataDevolucao = ObterDataDevolucao()
-            };
+            Emprestimos infoEmprestimo = new();
+
+            infoEmprestimo.amigo = ObterAmigo();
+            if (infoEmprestimo.amigo == null)
+                return null;
+
+            infoEmprestimo.revista = ObterRevista();
+            infoEmprestimo.dataEmprestimo = ObterDataEmprestimo();
+            infoEmprestimo.dataDevolucao = ObterDataDevolucao();
 
             return infoEmprestimo;
         }
@@ -130,9 +176,16 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
         {
             telaCadastroAmigos.VisualizarAmigos();
 
-            if (ValidaListaVazia(repositorioCaixas.listaDados))
+            if (ValidaListaVazia(repositorioAmigos.listaDados))
             {
-                Amigos amigo = telaCadastroAmigos.ValidaIdAmigos("fazer o emprestimo: ");
+                Amigos amigo = telaCadastroAmigos.ValidaIdAmigos("Digite o ID do Amigo que deseja o empréstimo: ");
+
+                foreach (Emprestimos info in repositorioEmprestimos.GetListaDados())
+                {
+                    if (info.amigo.id == amigo.id && info.situacao != "DEVOLVIDO")
+                        return null;
+                }
+
                 return amigo;
             }
             Console.ReadLine();
@@ -143,9 +196,9 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
         {
             telaCadastroRevistas.VisualizarRevistas();
 
-            if (ValidaListaVazia(repositorioCaixas.listaDados))
+            if (ValidaListaVazia(repositorioRevistas.listaDados))
             {
-                Revistas revista = telaCadastroRevistas.ValidaIdRevistas("emprestar: ");
+                Revistas revista = telaCadastroRevistas.ValidaIdRevistas("Digite o ID da Revista que deseja emprestar: ");
                 return revista;
             }
             Console.ReadLine();
@@ -164,13 +217,13 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
             return dataDevolucao;
         }
 
-        private Emprestimos ValidaIdEmprestimos(string tipo)
+        private Emprestimos ValidaIdEmprestimos(string mensagem)
         {
             Emprestimos dataDevolucao;
 
             do
             {
-                dataDevolucao = repositorioEmprestimos.SelecionarId(ObterIdEscolhido(tipo));
+                dataDevolucao = repositorioEmprestimos.SelecionarId(ObterIdEscolhido(mensagem));
 
                 if (dataDevolucao == null)
                 {

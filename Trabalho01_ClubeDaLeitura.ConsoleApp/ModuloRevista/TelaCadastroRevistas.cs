@@ -13,6 +13,10 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
 {
     public class TelaCadastroRevistas : Tela
     {
+        public RepositorioRevistas repositorioRevistas = null;
+        public RepositorioCaixas repositorioCaixas = null;
+        public TelaCadastroCaixa telaCadastroCaixa = null;
+
         public void EscolherOpcaoMenu()
         {
             bool continuar = true;
@@ -46,7 +50,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
 
             if (ValidaListaVazia(repositorioRevistas.listaDados))
             {
-                Revistas idCadastroRevistaSelecionado = ValidaIdRevistas("editar");
+                Revistas idCadastroRevistaSelecionado = ValidaIdRevistas("Digite o ID da Revista que deseja editar: ");
 
                 Revistas infoRevistaAtualizado = ObterCadastroRevista();
 
@@ -66,7 +70,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
 
             if (ValidaListaVazia(repositorioRevistas.listaDados))
             {
-                Revistas idCadastroRevistaSelecionado = ValidaIdRevistas("excluir");
+                Revistas idCadastroRevistaSelecionado = ValidaIdRevistas("Digite o ID da Revista que deseja excluir: ");
 
                 repositorioRevistas.Excluir(idCadastroRevistaSelecionado);
 
@@ -82,25 +86,45 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
         {
             Console.Clear();
 
-            Console.WriteLine("╔══════════════════╗");
-            Console.WriteLine("║     Revistas     ║");
-            Console.WriteLine("╚══════════════════╝");
+            Console.WriteLine("╔" + "".PadRight(117, '═') + "╗");
+            Console.WriteLine("║                                                     Revistas                                                        ║");
+            Console.WriteLine("╚" + "".PadRight(117, '═') + "╝");
             PulaLinha();
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("{0, -10} │ {1, -20} │ {2, -15} │ {3, -15} │ {4, -15}", "ID", "Tipo de Coleção", "N°Edição", "Ano", "Caixa");
-            Console.WriteLine("".PadRight(87, '―'));
+            string espacamento = "{0, -5} │ {1, -30} │ {2, -25} │ {3, -12} │ {4, -7} │ {5, -25}";
+            Console.WriteLine(espacamento, "ID", "Título", "Tipo de Coleção", "N°Edição", "Ano", "Caixa");
+            Console.WriteLine("".PadRight(119, '―'));
             Console.ResetColor();
 
             foreach (Revistas info in repositorioRevistas.GetListaDados())
             {
                 TextoZebrado();
 
-                Console.WriteLine("{0, -10} │ {1, -20} │ {2, -15} │ {3, -15} │ {4, -15}", info.id, info.colecao, info.edicao, info.ano, info.caixa == null ? "<Sem Caixa>" : info.caixa.etiqueta);
+                Console.WriteLine(espacamento, info.id, info.titulo, info.colecao, info.edicao, info.ano, info.caixa == null ? "<Sem Caixa>" : info.caixa.etiqueta);
             }
 
             Console.ResetColor();
+            zebra = true;
 
             PulaLinha();
+        }
+
+        public Revistas ValidaIdRevistas(string mensagem)
+        {
+            Revistas caixa;
+
+            do
+            {
+                caixa = repositorioRevistas.SelecionarId(ObterIdEscolhido(mensagem));
+
+                if (caixa == null)
+                {
+                    MensagemColor("Atenção, apenas ID`s existentes\n", ConsoleColor.Red);
+                }
+
+            } while (caixa == null);
+
+            return caixa;
         }
 
         private bool InicializarOpcaoEscolhida()
@@ -123,6 +147,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
         {
             Revistas infoRevista = new()
             {
+                titulo = ObterTitulo(),
                 colecao = ObterColecao(),
                 edicao = ObterEdicao(),
                 ano = ObterAno(),
@@ -132,7 +157,14 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
             return infoRevista;
         }
 
-        private static string ObterColecao()
+        private string ObterTitulo()
+        {
+            Console.Write("Escreva o Título da Revista: ");
+            string titulo = Console.ReadLine();
+            return titulo;
+        }
+
+        private string ObterColecao()
         {
             Console.Write("Escreva o Tipo de Coleção: ");
             string colecao = Console.ReadLine();
@@ -156,29 +188,11 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
             telaCadastroCaixa.VisualizarCaixas();
             if (ValidaListaVazia(repositorioCaixas.listaDados))
             {
-                Caixas caixa = telaCadastroCaixa.ValidaIdCaixas("guardar a Revista: ");
+                Caixas caixa = telaCadastroCaixa.ValidaIdCaixas("Digite o ID da Caixa que deseja guardar a Revista: ");
                 return caixa;
             }
             Console.ReadLine();
             return null;
-        }
-
-        public Revistas ValidaIdRevistas(string tipo)
-        {
-            Revistas caixa;
-
-            do
-            {
-                caixa = repositorioRevistas.SelecionarId(ObterIdEscolhido(tipo));
-
-                if (caixa == null)
-                {
-                    MensagemColor("Atenção, apenas ID`s existentes\n", ConsoleColor.Red);
-                }
-
-            } while (caixa == null);
-
-            return caixa;
         }
     }
 }

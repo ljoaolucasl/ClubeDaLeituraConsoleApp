@@ -10,7 +10,42 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp
     {
         static void Main(string[] args)
         {
+            RepositorioAmigos repositorioAmigos = new();
+            RepositorioCaixas repositorioCaixas = new();
+
+            RepositorioRevistas repositorioRevistas = new();
+            repositorioRevistas.repositorioCaixas = repositorioCaixas;
+
+            RepositorioEmprestimos repositorioEmprestimos = new();
+            repositorioEmprestimos.repositorioAmigos = repositorioAmigos;
+            repositorioEmprestimos.repositorioRevistas = repositorioRevistas;
+
+            TelaCadastroAmigos telaCadastroAmigos = new();
+            telaCadastroAmigos.repositorioAmigos = repositorioAmigos;
+
+            TelaCadastroCaixa telaCadastroCaixa = new();
+            telaCadastroCaixa.repositorioCaixas = repositorioCaixas;
+
+            TelaCadastroRevistas telaCadastroRevistas = new();
+            telaCadastroRevistas.repositorioRevistas = repositorioRevistas;
+            telaCadastroRevistas.repositorioCaixas = repositorioCaixas;
+
+            telaCadastroRevistas.telaCadastroCaixa = telaCadastroCaixa;
+
+            TelaCadastroEmprestimos telaCadastroEmprestimos = new();
+            telaCadastroEmprestimos.repositorioEmprestimos = repositorioEmprestimos;
+            telaCadastroEmprestimos.repositorioAmigos = repositorioAmigos;
+            telaCadastroEmprestimos.repositorioRevistas = repositorioRevistas;
+
+            telaCadastroEmprestimos.telaCadastroAmigos = telaCadastroAmigos;
+            telaCadastroEmprestimos.telaCadastroRevistas = telaCadastroRevistas;
+
             bool continuar = true;
+
+            repositorioAmigos.PreCadastrarAmigos();
+            repositorioCaixas.PreCadastrarCaixas();
+            repositorioRevistas.PreCadastrarRevistas();
+            repositorioEmprestimos.PreCadastrarEmprestimos();
 
             while (continuar)
             {
@@ -18,10 +53,10 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp
 
                 switch (ObterEscolha().ToUpper())
                 {
-                    case "1": Tela.telaCadastroAmigos.EscolherOpcaoMenu(); break;
-                    case "2": Tela.telaCadastroRevistas.EscolherOpcaoMenu(); break;
-                    case "3": Tela.telaCadastroCaixa.EscolherOpcaoMenu(); break;
-                    case "4": Tela.telaCadastroEmprestimos.EscolherOpcaoMenu(); break;
+                    case "1": telaCadastroAmigos.EscolherOpcaoMenu(); break;
+                    case "2": telaCadastroRevistas.EscolherOpcaoMenu(); break;
+                    case "3": telaCadastroCaixa.EscolherOpcaoMenu(); break;
+                    case "4": telaCadastroEmprestimos.EscolherOpcaoMenu(); break;
                     case "S": continuar = false; break;
                     default: break;
                 }

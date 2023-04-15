@@ -10,6 +10,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
 {
     public class Revistas : Entidade
     {
+        public string titulo;
         public string colecao;
         public int edicao;
         public int ano;

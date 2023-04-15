@@ -12,16 +12,9 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
     {
         public void Adicionar(Amigos infoAmigo)
         {
-            Amigos cadastroAmigo = new();
-
-            DefinirId(cadastroAmigo);
+            DefinirId(infoAmigo);
             IncrementarId();
-            cadastroAmigo.nome = infoAmigo.nome;
-            cadastroAmigo.nomeResponsavel = infoAmigo.nomeResponsavel;
-            cadastroAmigo.telefone = infoAmigo.telefone;
-            cadastroAmigo.endereco = infoAmigo.endereco;
-
-            listaDados.Add(cadastroAmigo);
+            listaDados.Add(infoAmigo);
         }
 
         public void Editar(Amigos idCadastroAmigoSelecionado, Amigos infoAmigoAtualizado)
@@ -35,6 +28,8 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
         public void Excluir(Amigos idCadastroAmigoSelecionado)
         {
             int idEscolhidoIndex = listaDados.IndexOf(idCadastroAmigoSelecionado);
+
+            idCadastroAmigoSelecionado.nome += "<Removed>";
 
             listaDados.RemoveAt(idEscolhidoIndex);
         }
@@ -52,6 +47,33 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
                 }
                 return null;
             }
+        }
+
+        public void PreCadastrarAmigos()
+        {
+            Amigos amigos1 = new();
+            amigos1.nome = "José Pereira";
+            amigos1.nomeResponsavel = "Maria Pereira";
+            amigos1.telefone = 88546236;
+            amigos1.endereco = "Rua Peixoto";
+
+            Adicionar(amigos1);
+
+            Amigos amigos2 = new();
+            amigos2.nome = "Carlinhos Costa";
+            amigos2.nomeResponsavel = "Luíza Costa";
+            amigos2.telefone = 98654133;
+            amigos2.endereco = "Rua Jaqueline";
+
+            Adicionar(amigos2);
+
+            Amigos amigos3 = new();
+            amigos3.nome = "Raimundo Da Silva";
+            amigos3.nomeResponsavel = "Paulo Da Silva";
+            amigos3.telefone = 99564874;
+            amigos3.endereco = "Rua Jaqueline";
+
+            Adicionar(amigos3);
         }
 
         private void DefinirId(Amigos cadastroAmigo)

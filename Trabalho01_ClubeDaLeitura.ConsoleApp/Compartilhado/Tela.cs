@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloCaixa;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo;
@@ -14,14 +8,14 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado
 {
     public class Tela
     {
-        public static TelaCadastroAmigos telaCadastroAmigos = new();
-        public static TelaCadastroCaixa telaCadastroCaixa = new();
-        public static TelaCadastroRevistas telaCadastroRevistas = new();
-        public static TelaCadastroEmprestimos telaCadastroEmprestimos = new();
-        public static RepositorioAmigos repositorioAmigos = new();
-        public static RepositorioCaixas repositorioCaixas = new();
-        public static RepositorioRevistas repositorioRevistas = new();
-        public static RepositorioEmprestimos repositorioEmprestimos = new();
+        //public static TelaCadastroAmigos telaCadastroAmigos = new();
+        //public static TelaCadastroCaixa telaCadastroCaixa = new();
+        //public static TelaCadastroRevistas telaCadastroRevistas = new();
+        //public static TelaCadastroEmprestimos telaCadastroEmprestimos = new();
+        //public static RepositorioAmigos repositorioAmigos = new();
+        //public static RepositorioCaixas repositorioCaixas = new();
+        //public static RepositorioRevistas repositorioRevistas = new();
+        //public static RepositorioEmprestimos repositorioEmprestimos = new();
 
         public void MostrarMenu(string tipo)
         {
@@ -33,15 +27,18 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado
             Console.WriteLine($"(2)Adicionar {tipo}");
             Console.WriteLine($"(3)Editar {tipo}");
             Console.WriteLine($"(4)Excluir {tipo}");
+            if(tipo == "Empréstimo")
+                Console.WriteLine($"(5)Devoluções");
+
             PulaLinha();
             Console.WriteLine("(S)Sair");
             PulaLinha();
             Console.Write("Escolha: ");
         }
 
-        public int ObterIdEscolhido(string acao)
+        public int ObterIdEscolhido(string mensagem)
         {
-            int idEscolhido = ValidaNumero($"Digite o ID da linha que deseja {acao}: ");
+            int idEscolhido = ValidaNumero(mensagem);
 
             return idEscolhido;
         }
@@ -89,7 +86,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado
             Console.ResetColor();
         }
 
-        public static void TextoZebrado()
+        public void TextoZebrado()
         {
             if (zebra)
             {
@@ -105,6 +102,6 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado
             Console.WriteLine();
         }
 
-        private static bool zebra = true;
+        public bool zebra = true;
     }
 }
