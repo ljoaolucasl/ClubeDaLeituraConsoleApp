@@ -23,7 +23,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
 
             while (continuar)
             {
-                MostrarMenu("Revista");
+                MostrarMenu("Revista", ConsoleColor.DarkMagenta);
 
                 continuar = InicializarOpcaoEscolhida();
             }
@@ -86,16 +86,16 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
         {
             Console.Clear();
 
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
             Console.WriteLine("╔" + "".PadRight(117, '═') + "╗");
-            Console.WriteLine("║                                                     Revistas                                                        ║");
+            Console.WriteLine("║                                                      Revistas                                                       ║");
             Console.WriteLine("╚" + "".PadRight(117, '═') + "╝");
             PulaLinha();
-            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.Magenta;
             string espacamento = "{0, -5} │ {1, -30} │ {2, -25} │ {3, -12} │ {4, -7} │ {5, -25}";
             Console.WriteLine(espacamento, "ID", "Título", "Tipo de Coleção", "N°Edição", "Ano", "Caixa");
             Console.WriteLine("".PadRight(119, '―'));
             Console.ResetColor();
-
             foreach (Revistas info in repositorioRevistas.GetListaDados())
             {
                 TextoZebrado();

@@ -19,7 +19,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
 
             while (continuar)
             {
-                MostrarMenu("Amigo");
+                MostrarMenu("Amigo", ConsoleColor.Cyan);
 
                 continuar = InicializarOpcaoEscolhida();
             }
@@ -82,12 +82,12 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
         {
             Console.Clear();
 
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("╔" + "".PadRight(130, '═') + "╗");
-            Console.WriteLine("║                                                            Amigos                                                                ║");
+            Console.WriteLine("║                                                              Amigos                                                              ║");
             Console.WriteLine("╚" + "".PadRight(130, '═') + "╝");
             PulaLinha();
-            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
             string espacamento = "{0, -5} │ {1, -30} │ {2, -30} │ {3, -20} │ {4, -35}";
             Console.WriteLine(espacamento, "ID", "Nome", "Nome do Responsável", "Telefone", "Endereço");
             Console.WriteLine("".PadRight(132, '―'));

@@ -20,7 +20,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
 
             while (continuar)
             {
-                MostrarMenu("Empréstimo");
+                MostrarMenu("Empréstimo", ConsoleColor.DarkCyan);
 
                 continuar = InicializarOpcaoEscolhida();
             }
@@ -34,7 +34,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
 
             if(infoEmprestimo == null)
             {
-                MensagemColor("Esse Amigo ainda não devolveu a Revista ):", ConsoleColor.Red);
+                MensagemColor("Esse Amigo ainda não devolveu a Revista!", ConsoleColor.Red);
                 Console.ReadLine();
                 return;
             }
@@ -57,6 +57,13 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
                 Emprestimos idCadastroEmprestimoSelecionado = ValidaIdEmprestimos("Digite o ID do Empréstimo que deseja editar: ");
 
                 Emprestimos infoEmprestimoAtualizado = ObterCadastroEmprestimo();
+
+                if (infoEmprestimoAtualizado == null)
+                {
+                    MensagemColor("Esse Amigo ainda não devolveu a Revista!", ConsoleColor.Red);
+                    Console.ReadLine();
+                    return;
+                }
 
                 repositorioEmprestimos.Editar(idCadastroEmprestimoSelecionado, infoEmprestimoAtualizado);
 
@@ -108,13 +115,17 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
         {
             Console.Clear();
 
+            ConsoleColor cor;
+
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.WriteLine("╔" + "".PadRight(127, '═') + "╗");
-            Console.WriteLine("║                                                         Emprétimos                                                            ║");
+            Console.WriteLine("║                                                          Emprétimos                                                           ║");
             Console.WriteLine("╚" + "".PadRight(127, '═') + "╝");
             PulaLinha();
-            Console.ForegroundColor = ConsoleColor.Blue;
-            string espacamento = "{0, -5} │ {1, -30} │ {2, -30} │ {3, -17} │ {4, -17} │ {5, -15}";
-            Console.WriteLine(espacamento, "ID", "Amigo", "Revista", "Data Empréstimo", "Data Devolução", "Situação");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            string espacamento = "{0, -5} │ {1, -30} │ {2, -30} │ {3, -17} │ {4, -17} │ ";
+            Console.Write(espacamento, "ID", "Amigo", "Revista", "Data Empréstimo", "Data Devolução");
+            Console.WriteLine("{0, -15}", "Situação");
             Console.WriteLine("".PadRight(129, '―'));
             Console.ResetColor();
 
@@ -122,16 +133,19 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
             {
                 TextoZebrado();
 
-                if (info.situacao == "DEVOLVIDO") { }
+                if (info.situacao == "DEVOLVIDO")
+                    cor = ConsoleColor.Green;
 
                 else if (DateTime.Now < info.dataDevolucao)
-                    info.situacao = "ABERTO";
-                else
-                    info.situacao = "ATRASADO";
+                { info.situacao = "ABERTO"; cor = ConsoleColor.White; }
 
-                Console.WriteLine(espacamento, info.id, info.amigo == null ? "<Desconhecido>" : info.amigo.nome,
-                    info.revista == null ? "<Desconhecido>" : info.revista.titulo, info.dataEmprestimo.ToString("d"),
-                    info.dataDevolucao.ToString("d"), info.situacao);
+                else 
+                { info.situacao = "ATRASADO"; cor = ConsoleColor.DarkRed; }
+
+                Console.Write(espacamento, info.id, info.amigo == null ? "<Desconhecido>" : info.amigo.nome, info.revista == null ? "<Desconhecido>" : info.revista.titulo, info.dataEmprestimo.ToString("d"), info.dataDevolucao.ToString("d"));
+                Console.ForegroundColor = cor;
+                Console.WriteLine("{0, -15}", info.situacao);
+                Console.ResetColor();
             }
 
             Console.ResetColor();

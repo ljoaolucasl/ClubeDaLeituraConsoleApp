@@ -17,11 +17,13 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado
         //public static RepositorioRevistas repositorioRevistas = new();
         //public static RepositorioEmprestimos repositorioEmprestimos = new();
 
-        public void MostrarMenu(string tipo)
+        public void MostrarMenu(string tipo, ConsoleColor cor)
         {
             Console.Clear();
 
+            Console.ForegroundColor = cor;
             Console.WriteLine($"Controle de {tipo}s");
+            Console.ResetColor();
             PulaLinha();
             Console.WriteLine($"(1)Visualizar {tipo}s");
             Console.WriteLine($"(2)Adicionar {tipo}");

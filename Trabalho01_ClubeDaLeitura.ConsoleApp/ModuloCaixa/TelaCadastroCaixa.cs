@@ -20,7 +20,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloCaixa
 
             while (continuar)
             {
-                MostrarMenu("Caixa");
+                MostrarMenu("Caixa", ConsoleColor.DarkYellow);
 
                 continuar = InicializarOpcaoEscolhida();
             }
@@ -83,11 +83,12 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloCaixa
         {
             Console.Clear();
 
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("╔" + "".PadRight(44, '═') + "╗");
-            Console.WriteLine("║                 Caixas                     ║");
+            Console.WriteLine("║                   Caixas                   ║");
             Console.WriteLine("╚" + "".PadRight(44, '═') + "╝");
             PulaLinha();
-            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.Yellow;
             string espacamento = "{0, -5} │ {1, -10} │ {2, -25}";
             Console.WriteLine(espacamento, "ID", "Cor", "Etiqueta");
             Console.WriteLine("".PadRight(46, '―'));

@@ -67,9 +67,9 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp
         {
             Console.Clear();
 
-            Console.WriteLine("╔══════════════════╗");
-            Console.WriteLine("║ Clube da Leitura ║");
-            Console.WriteLine("╚══════════════════╝");
+            Console.WriteLine("╔════════════════════════╗");
+            Console.WriteLine("║    Clube da Leitura    ║");
+            Console.WriteLine("╚════════════════════════╝");
             PulaLinha();
             Console.WriteLine("(1)Controle de Amigos");
             Console.WriteLine("(2)Controle de Revistas");
