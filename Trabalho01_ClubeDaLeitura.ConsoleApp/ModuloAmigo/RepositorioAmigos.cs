@@ -10,13 +10,6 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
 {
     public class RepositorioAmigos : Repositorio
     {
-        public void Adicionar(Amigos infoAmigo)
-        {
-            DefinirId(infoAmigo);
-            IncrementarId();
-            listaDados.Add(infoAmigo);
-        }
-
         public void Editar(Amigos idCadastroAmigoSelecionado, Amigos infoAmigoAtualizado)
         {
             idCadastroAmigoSelecionado.nome = infoAmigoAtualizado.nome;
@@ -25,30 +18,13 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
             idCadastroAmigoSelecionado.endereco = infoAmigoAtualizado.endereco;
         }
 
-        public void Excluir(Amigos idCadastroAmigoSelecionado)
+        public override void ItemRemovido(Entidade idCadastroAmigoSelecionado)
         {
-            int idEscolhidoIndex = listaDados.IndexOf(idCadastroAmigoSelecionado);
+            Amigos amigo = (Amigos)idCadastroAmigoSelecionado;
 
-            idCadastroAmigoSelecionado.nome += "<Removed>";
-
-            listaDados.RemoveAt(idEscolhidoIndex);
+            amigo.nome += "<Removed>";
         }
-
-        public Amigos SelecionarId(int idEscolhido)
-        {
-            while (true)
-            {
-                foreach (Amigos amigo in listaDados)
-                {
-                    if (amigo.id == idEscolhido)
-                    {
-                        return amigo;
-                    }
-                }
-                return null;
-            }
-        }
-
+             
         public void PreCadastrarAmigos()
         {
             Amigos amigos1 = new();
@@ -74,11 +50,6 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
             amigos3.endereco = "Rua Jaqueline";
 
             Adicionar(amigos3);
-        }
-
-        private void DefinirId(Amigos cadastroAmigo)
-        {
-            cadastroAmigo.id = id;
         }
     }
 }

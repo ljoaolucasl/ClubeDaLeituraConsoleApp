@@ -10,6 +10,8 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp
     {
         static void Main(string[] args)
         {
+
+            #region Inicialização e Sincronização de Listas
             RepositorioAmigos repositorioAmigos = new();
             RepositorioCaixas repositorioCaixas = new();
 
@@ -39,6 +41,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp
 
             telaCadastroEmprestimos.telaCadastroAmigos = telaCadastroAmigos;
             telaCadastroEmprestimos.telaCadastroRevistas = telaCadastroRevistas;
+            #endregion
 
             bool continuar = true;
 

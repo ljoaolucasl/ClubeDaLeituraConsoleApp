@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado;
+using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloCaixa;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista;
 
@@ -24,59 +25,6 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloCaixa
 
                 continuar = InicializarOpcaoEscolhida();
             }
-        }
-
-        public void AdicionarCadastroCaixa()
-        {
-            VisualizarCaixas();
-
-            Caixas infoCaixa = ObterCadastroCaixa();
-
-            repositorioCaixas.Adicionar(infoCaixa);
-
-            VisualizarCaixas();
-
-            MensagemColor("\nCaixa adicionada com sucesso!", ConsoleColor.Green);
-
-            Console.ReadLine();
-        }
-
-        public void EditarCadastroCaixa()
-        {
-            VisualizarCaixas();
-
-            if (ValidaListaVazia(repositorioCaixas.listaDados))
-            {
-                Caixas idCadastroCaixaSelecionado = ValidaIdCaixas("Digite o ID da Caixa que deseja editar: ");
-
-                Caixas infoCaixaAtualizado = ObterCadastroCaixa();
-
-                repositorioCaixas.Editar(idCadastroCaixaSelecionado, infoCaixaAtualizado);
-
-                VisualizarCaixas();
-
-                MensagemColor($"\nCaixa editada com sucesso!", ConsoleColor.Green);
-            }
-
-            Console.ReadLine();
-        }
-
-        public void ExcluirCadastroCaixa()
-        {
-            VisualizarCaixas();
-
-            if (ValidaListaVazia(repositorioCaixas.listaDados))
-            {
-                Caixas idCadastroCaixaSelecionado = ValidaIdCaixas("Digite o ID da Caixa que deseja excluir: ");
-
-                repositorioCaixas.Excluir(idCadastroCaixaSelecionado);
-
-                VisualizarCaixas();
-
-                MensagemColor("\nCaixa excluída com sucesso!", ConsoleColor.Green);
-            }
-
-            Console.ReadLine();
         }
 
         public void VisualizarCaixas()
@@ -107,22 +55,75 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloCaixa
             PulaLinha();
         }
 
-        public Caixas ValidaIdCaixas(string mensagem)
+        private void AdicionarCadastroCaixa()
         {
-            Caixas caixa;
+            VisualizarCaixas();
 
-            do
+            Caixas infoCaixa = ObterCadastroCaixa();
+
+            repositorioCaixas.Adicionar(infoCaixa);
+
+            VisualizarCaixas();
+
+            MensagemColor("\nCaixa adicionada com sucesso!", ConsoleColor.Green);
+
+            Console.ReadLine();
+        }
+
+        private void EditarCadastroCaixa()
+        {
+            VisualizarCaixas();
+
+            if (ValidaListaVazia(repositorioCaixas.listaDados))
             {
-                caixa = repositorioCaixas.SelecionarId(ObterIdEscolhido(mensagem));
-
-                if (caixa == null)
+                Caixas idSelecionado; bool idValido;
+                do
                 {
-                    MensagemColor("Atenção, apenas ID`s existentes\n", ConsoleColor.Red);
-                }
+                    idSelecionado = (Caixas)repositorioCaixas.SelecionarId(ObterIdEscolhido("Digite o ID da Caixa que deseja editar: "));
 
-            } while (caixa == null);
+                    idSelecionado = (Caixas)ValidaId(idSelecionado);
 
-            return caixa;
+                    idValido = idSelecionado != null;
+
+                } while (!idValido);
+
+                Caixas infoCaixaAtualizado = ObterCadastroCaixa();
+
+                repositorioCaixas.Editar(idSelecionado, infoCaixaAtualizado);
+
+                VisualizarCaixas();
+
+                MensagemColor($"\nCaixa editada com sucesso!", ConsoleColor.Green);
+            }
+
+            Console.ReadLine();
+        }
+
+        private void ExcluirCadastroCaixa()
+        {
+            VisualizarCaixas();
+
+            if (ValidaListaVazia(repositorioCaixas.listaDados))
+            {
+                Caixas idSelecionado; bool idValido;
+                do
+                {
+                    idSelecionado = (Caixas)repositorioCaixas.SelecionarId(ObterIdEscolhido("Digite o ID da Caixa que deseja excluir: "));
+
+                    idSelecionado = (Caixas)ValidaId(idSelecionado);
+
+                    idValido = idSelecionado != null;
+
+                } while (!idValido);
+
+                repositorioCaixas.Excluir(idSelecionado);
+
+                VisualizarCaixas();
+
+                MensagemColor("\nCaixa excluída com sucesso!", ConsoleColor.Green);
+            }
+
+            Console.ReadLine();
         }
 
         private bool InicializarOpcaoEscolhida()

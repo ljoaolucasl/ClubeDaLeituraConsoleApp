@@ -29,59 +29,6 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
             }
         }
 
-        public void AdicionarCadastroRevista()
-        {
-            VisualizarRevistas();
-
-            Revistas infoRevista = ObterCadastroRevista();
-
-            repositorioRevistas.Adicionar(infoRevista);
-
-            VisualizarRevistas();
-
-            MensagemColor("\nRevista adicionada com sucesso!", ConsoleColor.Green);
-
-            Console.ReadLine();
-        }
-
-        public void EditarCadastroRevista()
-        {
-            VisualizarRevistas();
-
-            if (ValidaListaVazia(repositorioRevistas.listaDados))
-            {
-                Revistas idCadastroRevistaSelecionado = ValidaIdRevistas("Digite o ID da Revista que deseja editar: ");
-
-                Revistas infoRevistaAtualizado = ObterCadastroRevista();
-
-                repositorioRevistas.Editar(idCadastroRevistaSelecionado, infoRevistaAtualizado);
-
-                VisualizarRevistas();
-
-                MensagemColor("\nRevista editada com sucesso!", ConsoleColor.Green);
-            }
-
-            Console.ReadLine();
-        }
-
-        public void ExcluirCadastroRevista()
-        {
-            VisualizarRevistas();
-
-            if (ValidaListaVazia(repositorioRevistas.listaDados))
-            {
-                Revistas idCadastroRevistaSelecionado = ValidaIdRevistas("Digite o ID da Revista que deseja excluir: ");
-
-                repositorioRevistas.Excluir(idCadastroRevistaSelecionado);
-
-                VisualizarRevistas();
-
-                MensagemColor("\nRevista excluída com sucesso!", ConsoleColor.Green);
-            }
-
-            Console.ReadLine();
-        }
-
         public void VisualizarRevistas()
         {
             Console.Clear();
@@ -109,22 +56,75 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
             PulaLinha();
         }
 
-        public Revistas ValidaIdRevistas(string mensagem)
+        private void AdicionarCadastroRevista()
         {
-            Revistas caixa;
+            VisualizarRevistas();
 
-            do
+            Revistas infoRevista = ObterCadastroRevista();
+
+            repositorioRevistas.Adicionar(infoRevista);
+
+            VisualizarRevistas();
+
+            MensagemColor("\nRevista adicionada com sucesso!", ConsoleColor.Green);
+
+            Console.ReadLine();
+        }
+
+        private void EditarCadastroRevista()
+        {
+            VisualizarRevistas();
+
+            if (ValidaListaVazia(repositorioRevistas.listaDados))
             {
-                caixa = repositorioRevistas.SelecionarId(ObterIdEscolhido(mensagem));
-
-                if (caixa == null)
+                Revistas idSelecionado; bool idValido;
+                do
                 {
-                    MensagemColor("Atenção, apenas ID`s existentes\n", ConsoleColor.Red);
-                }
+                    idSelecionado = (Revistas)repositorioRevistas.SelecionarId(ObterIdEscolhido("Digite o ID da Revista que deseja editar: "));
 
-            } while (caixa == null);
+                    idSelecionado = (Revistas)ValidaId(idSelecionado);
 
-            return caixa;
+                    idValido = idSelecionado != null;
+
+                } while (!idValido);
+
+                Revistas infoRevistaAtualizado = ObterCadastroRevista();
+
+                repositorioRevistas.Editar(idSelecionado, infoRevistaAtualizado);
+
+                VisualizarRevistas();
+
+                MensagemColor("\nRevista editada com sucesso!", ConsoleColor.Green);
+            }
+
+            Console.ReadLine();
+        }
+
+        private void ExcluirCadastroRevista()
+        {
+            VisualizarRevistas();
+
+            if (ValidaListaVazia(repositorioRevistas.listaDados))
+            {
+                Revistas idSelecionado; bool idValido;
+                do
+                {
+                    idSelecionado = (Revistas)repositorioRevistas.SelecionarId(ObterIdEscolhido("Digite o ID da Revista que deseja excluir: "));
+
+                    idSelecionado = (Revistas)ValidaId(idSelecionado);
+
+                    idValido = idSelecionado != null;
+
+                } while (!idValido);
+
+                repositorioRevistas.Excluir(idSelecionado);
+
+                VisualizarRevistas();
+
+                MensagemColor("\nRevista excluída com sucesso!", ConsoleColor.Green);
+            }
+
+            Console.ReadLine();
         }
 
         private bool InicializarOpcaoEscolhida()
@@ -186,9 +186,20 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
         private Caixas ObterCaixa()
         {
             telaCadastroCaixa.VisualizarCaixas();
+
             if (ValidaListaVazia(repositorioCaixas.listaDados))
             {
-                Caixas caixa = telaCadastroCaixa.ValidaIdCaixas("Digite o ID da Caixa que deseja guardar a Revista: ");
+                Caixas caixa; bool idValido;
+                do
+                {
+                    caixa = (Caixas)repositorioCaixas.SelecionarId(ObterIdEscolhido("Digite o ID da Caixa que deseja guardar a Revista: "));
+
+                    caixa = (Caixas)ValidaId(caixa);
+
+                    idValido = caixa != null;
+
+                } while (!idValido);
+
                 return caixa;
             }
             Console.ReadLine();

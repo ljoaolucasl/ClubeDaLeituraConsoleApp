@@ -14,13 +14,6 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
     {
         public RepositorioCaixas repositorioCaixas = null;
 
-        public void Adicionar(Revistas infoRevista)
-        {
-            DefinirId(infoRevista);
-            IncrementarId();
-            listaDados.Add(infoRevista);
-        }
-
         public void Editar(Revistas idCadastroRevistaSelecionado, Revistas infoRevistaAtualizado)
         {
             idCadastroRevistaSelecionado.titulo = infoRevistaAtualizado.titulo;
@@ -30,30 +23,13 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
             idCadastroRevistaSelecionado.caixa = infoRevistaAtualizado.caixa;
         }
 
-        public void Excluir(Revistas idCadastroRevistaSelecionado)
+        public override void ItemRemovido(Entidade idCadastroRevistaSelecionado)
         {
-            int idEscolhidoIndex = listaDados.IndexOf(idCadastroRevistaSelecionado);
+            Revistas revista = (Revistas)idCadastroRevistaSelecionado;
 
-            idCadastroRevistaSelecionado.titulo += "<Removed>";
-
-            listaDados.RemoveAt(idEscolhidoIndex);
+            revista.titulo += "<Removed>";
         }
-
-        public Revistas SelecionarId(int idEscolhido)
-        {
-            while (true)
-            {
-                foreach (Revistas Revista in listaDados)
-                {
-                    if (Revista.id == idEscolhido)
-                    {
-                        return Revista;
-                    }
-                }
-                return null;
-            }
-        }
-
+                
         public void PreCadastrarRevistas()
         {
             Revistas revista1 = new();
@@ -61,7 +37,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
             revista1.colecao = "Superman";
             revista1.edicao = 5487;
             revista1.ano = 2020;
-            revista1.caixa = repositorioCaixas.SelecionarId(1);
+            revista1.caixa = (Caixas)repositorioCaixas.SelecionarId(1);
 
             Adicionar(revista1);
 
@@ -70,7 +46,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
             revista2.colecao = "Os Vingadores";
             revista2.edicao = 4782;
             revista2.ano = 2015;
-            revista2.caixa = repositorioCaixas.SelecionarId(2);
+            revista2.caixa = (Caixas)repositorioCaixas.SelecionarId(2);
 
             Adicionar(revista2);
 
@@ -79,14 +55,9 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloRevista
             revista3.colecao = "Turma da Mônica Jovem";
             revista3.edicao = 3324;
             revista3.ano = 2018;
-            revista3.caixa = repositorioCaixas.SelecionarId(3);
+            revista3.caixa = (Caixas)repositorioCaixas.SelecionarId(3);
 
             Adicionar(revista3);
-        }
-
-        private void DefinirId(Revistas cadastroRevista)
-        {
-            cadastroRevista.id = id;
         }
     }
 }

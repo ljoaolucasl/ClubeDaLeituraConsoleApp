@@ -5,49 +5,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado;
+using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo;
 using Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloCaixa;
 
 namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloCaixa
 {
     public class RepositorioCaixas : Repositorio
     {
-        public void Adicionar(Caixas infoCaixa)
-        {
-            DefinirId(infoCaixa);
-            IncrementarId();
-            listaDados.Add(infoCaixa);
-        }
-
         public void Editar(Caixas idCadastroCaixaSelecionado, Caixas infoCaixaAtualizado)
         {
             idCadastroCaixaSelecionado.etiqueta = infoCaixaAtualizado.etiqueta;
             idCadastroCaixaSelecionado.cor = infoCaixaAtualizado.cor;
         }
 
-        public void Excluir(Caixas idCadastroCaixaSelecionado)
+        public override void ItemRemovido(Entidade idCadastroCaixaSelecionado)
         {
-            int idEscolhidoIndex = listaDados.IndexOf(idCadastroCaixaSelecionado);
+            Caixas caixa = (Caixas)idCadastroCaixaSelecionado;
 
-            idCadastroCaixaSelecionado.etiqueta += "<Removed>";
-
-            listaDados.RemoveAt(idEscolhidoIndex);
+            caixa.etiqueta += "<Removed>";
         }
-
-        public Caixas SelecionarId(int idEscolhido)
-        {
-            while (true)
-            {
-                foreach (Caixas Caixa in listaDados)
-                {
-                    if (Caixa.id == idEscolhido)
-                    {
-                        return Caixa;
-                    }
-                }
-                return null;
-            }
-        }
-
+                
         public void PreCadastrarCaixas()
         {
             Caixas caixa1 = new();
@@ -67,11 +44,6 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloCaixa
             caixa3.cor = "Verde";
 
             Adicionar(caixa3);
-        }
-
-        private void DefinirId(Caixas cadastroCaixa)
-        {
-            cadastroCaixa.id = id;
         }
     }
 }

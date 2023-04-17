@@ -26,91 +26,6 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
             }
         }
 
-        public void AdicionarCadastroEmprestimo()
-        {
-            VisualizarEmprestimos();
-
-            Emprestimos infoEmprestimo = ObterCadastroEmprestimo();
-
-            if(infoEmprestimo == null)
-            {
-                MensagemColor("Esse Amigo ainda não devolveu a Revista!", ConsoleColor.Red);
-                Console.ReadLine();
-                return;
-            }
-
-            repositorioEmprestimos.Adicionar(infoEmprestimo);
-
-            VisualizarEmprestimos();
-
-            MensagemColor("\nEmpréstimo adicionado com sucesso!", ConsoleColor.Green);
-
-            Console.ReadLine();
-        }
-
-        public void EditarCadastroEmprestimo()
-        {
-            VisualizarEmprestimos();
-
-            if (ValidaListaVazia(repositorioEmprestimos.listaDados))
-            {
-                Emprestimos idCadastroEmprestimoSelecionado = ValidaIdEmprestimos("Digite o ID do Empréstimo que deseja editar: ");
-
-                Emprestimos infoEmprestimoAtualizado = ObterCadastroEmprestimo();
-
-                if (infoEmprestimoAtualizado == null)
-                {
-                    MensagemColor("Esse Amigo ainda não devolveu a Revista!", ConsoleColor.Red);
-                    Console.ReadLine();
-                    return;
-                }
-
-                repositorioEmprestimos.Editar(idCadastroEmprestimoSelecionado, infoEmprestimoAtualizado);
-
-                VisualizarEmprestimos();
-
-                MensagemColor("\nEmpréstimo editado com sucesso!", ConsoleColor.Green);
-            }
-
-            Console.ReadLine();
-        }
-
-        public void ExcluirCadastroEmprestimo()
-        {
-            VisualizarEmprestimos();
-
-            if (ValidaListaVazia(repositorioEmprestimos.listaDados))
-            {
-                Emprestimos idCadastroEmprestimoSelecionado = ValidaIdEmprestimos("Digite o ID do Empréstimo que deseja excluir: ");
-
-                repositorioEmprestimos.Excluir(idCadastroEmprestimoSelecionado);
-
-                VisualizarEmprestimos();
-
-                MensagemColor("\nEmprestimo excluído com sucesso!", ConsoleColor.Green);
-            }
-
-            Console.ReadLine();
-        }
-
-        public void ConfirmarDevolucoes()
-        {
-            VisualizarEmprestimos();
-
-            if (ValidaListaVazia(repositorioEmprestimos.listaDados))
-            {
-                Emprestimos idCadastroEmprestimoSelecionado = ValidaIdEmprestimos("Digite o ID para confirmar a Devolução da Revista: ");
-
-                repositorioEmprestimos.Devolver(idCadastroEmprestimoSelecionado);
-
-                VisualizarEmprestimos();
-
-                MensagemColor($"\nA Revista foi devolvida!", ConsoleColor.Green);
-            }
-
-            Console.ReadLine();
-        }
-
         public void VisualizarEmprestimos()
         {
             Console.Clear();
@@ -139,7 +54,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
                 else if (DateTime.Now < info.dataDevolucao)
                 { info.situacao = "ABERTO"; cor = ConsoleColor.White; }
 
-                else 
+                else
                 { info.situacao = "ATRASADO"; cor = ConsoleColor.DarkRed; }
 
                 Console.Write(espacamento, info.id, info.amigo == null ? "<Desconhecido>" : info.amigo.nome, info.revista == null ? "<Desconhecido>" : info.revista.titulo, info.dataEmprestimo.ToString("d"), info.dataDevolucao.ToString("d"));
@@ -152,6 +67,118 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
             zebra = true;
 
             PulaLinha();
+        }
+
+        private void AdicionarCadastroEmprestimo()
+        {
+            VisualizarEmprestimos();
+
+            Emprestimos infoEmprestimo = ObterCadastroEmprestimo();
+
+            if(infoEmprestimo == null)
+            {
+                MensagemColor("Esse Amigo ainda não devolveu a Revista!", ConsoleColor.Red);
+                Console.ReadLine();
+                return;
+            }
+
+            repositorioEmprestimos.Adicionar(infoEmprestimo);
+
+            VisualizarEmprestimos();
+
+            MensagemColor("\nEmpréstimo adicionado com sucesso!", ConsoleColor.Green);
+
+            Console.ReadLine();
+        }
+
+        private void EditarCadastroEmprestimo()
+        {
+            VisualizarEmprestimos();
+
+            if (ValidaListaVazia(repositorioEmprestimos.listaDados))
+            {
+                Emprestimos idSelecionado; bool idValido;
+                do
+                {
+                    idSelecionado = (Emprestimos)repositorioEmprestimos.SelecionarId(ObterIdEscolhido("Digite o ID do Empréstimo que deseja editar: "));
+
+                    idSelecionado = (Emprestimos)ValidaId(idSelecionado);
+
+                    idValido = idSelecionado != null;
+
+                } while (!idValido);
+
+                Emprestimos infoEmprestimoAtualizado = ObterCadastroEmprestimo();
+
+                if (infoEmprestimoAtualizado == null)
+                {
+                    MensagemColor("Esse Amigo ainda não devolveu a Revista!", ConsoleColor.Red);
+                    Console.ReadLine();
+                    return;
+                }
+
+                repositorioEmprestimos.Editar(idSelecionado, infoEmprestimoAtualizado);
+
+                VisualizarEmprestimos();
+
+                MensagemColor("\nEmpréstimo editado com sucesso!", ConsoleColor.Green);
+            }
+
+            Console.ReadLine();
+        }
+
+        private void ExcluirCadastroEmprestimo()
+        {
+            VisualizarEmprestimos();
+
+            if (ValidaListaVazia(repositorioEmprestimos.listaDados))
+            {
+                Emprestimos idSelecionado; bool idValido;
+                do
+                {
+                    idSelecionado = (Emprestimos)repositorioEmprestimos.SelecionarId(ObterIdEscolhido("Digite o ID do Empréstimo que deseja excluir: "));
+
+                    idSelecionado = (Emprestimos)ValidaId(idSelecionado);
+
+                    idValido = idSelecionado != null;
+
+                } while (!idValido);
+
+                repositorioEmprestimos.Excluir(idSelecionado);
+
+                VisualizarEmprestimos();
+
+                MensagemColor("\nEmprestimo excluído com sucesso!", ConsoleColor.Green);
+            }
+
+            Console.ReadLine();
+        }
+
+        private void ConfirmarDevolucoes()
+        {
+            VisualizarEmprestimos();
+
+            if (ValidaListaVazia(repositorioEmprestimos.listaDados))
+            {
+                Emprestimos idSelecionado; bool idValido;
+                do
+                {
+                    idSelecionado = (Emprestimos)repositorioEmprestimos.SelecionarId(ObterIdEscolhido("Digite o ID para confirmar a Devolução da Revista: "));
+
+                    idSelecionado = (Emprestimos)ValidaId(idSelecionado);
+
+                    idValido = idSelecionado != null;
+
+                } while (!idValido);
+
+                repositorioEmprestimos.Devolver(idSelecionado);
+
+                VisualizarEmprestimos();
+
+                MensagemColor($"\nA Revista foi devolvida!", ConsoleColor.Green);
+            }
+
+            Console.ReadLine();
         }
 
         private bool InicializarOpcaoEscolhida()
@@ -192,7 +219,16 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
 
             if (ValidaListaVazia(repositorioAmigos.listaDados))
             {
-                Amigos amigo = telaCadastroAmigos.ValidaIdAmigos("Digite o ID do Amigo que deseja o empréstimo: ");
+                Amigos amigo; bool idValido;
+                do
+                {
+                    amigo = (Amigos)repositorioAmigos.SelecionarId(ObterIdEscolhido("Digite o ID do Amigo que deseja o empréstimo: "));
+
+                    amigo = (Amigos)ValidaId(amigo);
+
+                    idValido = amigo != null;
+
+                } while (!idValido);
 
                 foreach (Emprestimos info in repositorioEmprestimos.GetListaDados())
                 {
@@ -212,7 +248,17 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
 
             if (ValidaListaVazia(repositorioRevistas.listaDados))
             {
-                Revistas revista = telaCadastroRevistas.ValidaIdRevistas("Digite o ID da Revista que deseja emprestar: ");
+                Revistas revista; bool idValido;
+                do
+                {
+                    revista = (Revistas)repositorioRevistas.SelecionarId(ObterIdEscolhido("Digite o ID da Revista que deseja emprestar: "));
+
+                    revista = (Revistas)ValidaId(revista);
+
+                    idValido = revista != null;
+
+                } while (!idValido);
+
                 return revista;
             }
             Console.ReadLine();
@@ -228,24 +274,6 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloEmprestimo
         private DateTime ObterDataDevolucao()
         {
             DateTime dataDevolucao = ValidaData("Escreva a Data da Devolução: ");
-            return dataDevolucao;
-        }
-
-        private Emprestimos ValidaIdEmprestimos(string mensagem)
-        {
-            Emprestimos dataDevolucao;
-
-            do
-            {
-                dataDevolucao = repositorioEmprestimos.SelecionarId(ObterIdEscolhido(mensagem));
-
-                if (dataDevolucao == null)
-                {
-                    MensagemColor("Atenção, apenas ID`s existentes\n", ConsoleColor.Red);
-                }
-
-            } while (dataDevolucao == null);
-
             return dataDevolucao;
         }
 

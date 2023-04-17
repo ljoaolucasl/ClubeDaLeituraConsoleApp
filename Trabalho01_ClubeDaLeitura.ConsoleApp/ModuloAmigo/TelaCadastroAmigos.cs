@@ -25,59 +25,6 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
             }
         }
 
-        public void AdicionarCadastroAmigo()
-        {
-            VisualizarAmigos();
-
-            Amigos infoAmigo = ObterCadastroAmigo();
-
-            repositorioAmigos.Adicionar(infoAmigo);
-
-            VisualizarAmigos();
-
-            MensagemColor("\nAmigo adicionado com sucesso!", ConsoleColor.Green);
-
-            Console.ReadLine();
-        }
-
-        public void EditarCadastroAmigo()
-        {
-            VisualizarAmigos();
-
-            if (ValidaListaVazia(repositorioAmigos.listaDados))
-            {
-                Amigos idCadastroAmigoSelecionado = ValidaIdAmigos("Digite o ID do Amigo que deseja editar: ");
-
-                Amigos infoAmigoAtualizado = ObterCadastroAmigo();
-
-                repositorioAmigos.Editar(idCadastroAmigoSelecionado, infoAmigoAtualizado);
-
-                VisualizarAmigos();
-
-                MensagemColor("\nAmigo editado com sucesso!", ConsoleColor.Green);
-            }
-
-            Console.ReadLine();
-        }
-
-        public void ExcluirCadastroAmigo()
-        {
-            VisualizarAmigos();
-
-            if (ValidaListaVazia(repositorioAmigos.listaDados))
-            {
-                Amigos idCadastroAmigoSelecionado = ValidaIdAmigos("Digite o ID do Amigo que deseja excluir: ");
-
-                repositorioAmigos.Excluir(idCadastroAmigoSelecionado);
-
-                VisualizarAmigos();
-
-                MensagemColor("\nAmigo excluído com sucesso!", ConsoleColor.Green);
-            }
-
-            Console.ReadLine();
-        }
-
         public void VisualizarAmigos()
         {
             Console.Clear();
@@ -106,24 +53,77 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.ModuloAmigo
             PulaLinha();
         }
 
-        public Amigos ValidaIdAmigos(string mensagem)
+        private void AdicionarCadastroAmigo()
         {
-            Amigos amigo;
+            VisualizarAmigos();
 
-            do
-            {
-                amigo = repositorioAmigos.SelecionarId(ObterIdEscolhido(mensagem));
+            Amigos infoAmigo = ObterCadastroAmigo();
 
-                if (amigo == null)
-                {
-                    MensagemColor("Atenção, apenas ID`s existentes\n", ConsoleColor.Red);
-                }
+            repositorioAmigos.Adicionar(infoAmigo);
 
-            } while (amigo == null);
+            VisualizarAmigos();
 
-            return amigo;
+            MensagemColor("\nAmigo adicionado com sucesso!", ConsoleColor.Green);
+
+            Console.ReadLine();
         }
 
+        private void EditarCadastroAmigo()
+        {
+            VisualizarAmigos();
+
+            if (ValidaListaVazia(repositorioAmigos.listaDados))
+            {
+                Amigos idSelecionado; bool idValido;
+                do
+                {
+                    idSelecionado = (Amigos)repositorioAmigos.SelecionarId(ObterIdEscolhido("Digite o ID do Amigo que deseja editar: "));
+
+                    idSelecionado = (Amigos)ValidaId(idSelecionado);
+
+                    idValido = idSelecionado != null;
+
+                } while (!idValido);
+
+                Amigos infoAmigoAtualizado = ObterCadastroAmigo();
+
+                repositorioAmigos.Editar(idSelecionado, infoAmigoAtualizado);
+
+                VisualizarAmigos();
+
+                MensagemColor("\nAmigo editado com sucesso!", ConsoleColor.Green);
+            }
+
+            Console.ReadLine();
+        }
+
+        private void ExcluirCadastroAmigo()
+        {
+            VisualizarAmigos();
+
+            if (ValidaListaVazia(repositorioAmigos.listaDados))
+            {
+                Amigos idSelecionado; bool idValido;
+                do
+                {
+                    idSelecionado = (Amigos)repositorioAmigos.SelecionarId(ObterIdEscolhido("Digite o ID do Amigo que deseja excluir: "));
+
+                    idSelecionado = (Amigos)ValidaId(idSelecionado);
+
+                    idValido = idSelecionado != null;
+
+                } while (!idValido);
+
+                repositorioAmigos.Excluir(idSelecionado);
+
+                VisualizarAmigos();
+
+                MensagemColor("\nAmigo excluído com sucesso!", ConsoleColor.Green);
+            }
+
+            Console.ReadLine();
+        }
+   
         private bool InicializarOpcaoEscolhida()
         {
             string entrada = Console.ReadLine();

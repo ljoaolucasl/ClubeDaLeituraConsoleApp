@@ -8,15 +8,6 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado
 {
     public class Tela
     {
-        //public static TelaCadastroAmigos telaCadastroAmigos = new();
-        //public static TelaCadastroCaixa telaCadastroCaixa = new();
-        //public static TelaCadastroRevistas telaCadastroRevistas = new();
-        //public static TelaCadastroEmprestimos telaCadastroEmprestimos = new();
-        //public static RepositorioAmigos repositorioAmigos = new();
-        //public static RepositorioCaixas repositorioCaixas = new();
-        //public static RepositorioRevistas repositorioRevistas = new();
-        //public static RepositorioEmprestimos repositorioEmprestimos = new();
-
         public void MostrarMenu(string tipo, ConsoleColor cor)
         {
             Console.Clear();
@@ -29,7 +20,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado
             Console.WriteLine($"(2)Adicionar {tipo}");
             Console.WriteLine($"(3)Editar {tipo}");
             Console.WriteLine($"(4)Excluir {tipo}");
-            if(tipo == "Empréstimo")
+            if (tipo == "Empréstimo")
                 Console.WriteLine($"(5)Devoluções");
 
             PulaLinha();
@@ -43,6 +34,16 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado
             int idEscolhido = ValidaNumero(mensagem);
 
             return idEscolhido;
+        }
+
+        public Entidade ValidaId(Entidade id)
+        {
+            if (id == null)
+            {
+                MensagemColor("Atenção, apenas ID`s existentes\n", ConsoleColor.Red);
+            }
+
+            return id;
         }
 
         public int ValidaNumero(string mensagem)
@@ -71,7 +72,7 @@ namespace Trabalho01_ClubeDaLeitura.ConsoleApp.Compartilhado
 
         public bool ValidaListaVazia(ArrayList lista)
         {
-            if(lista.Count == 0) 
+            if (lista.Count == 0)
             {
                 MensagemColor("A Lista de Cadastros está vazia . . .", ConsoleColor.DarkYellow);
                 return false;
